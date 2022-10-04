@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-dialog-container {
+  border-radius: 36px 36px 0 0 !important;
+  background-color: #2a3035;
+  color: #f3f4f4;
+}
+
+.fullScreenDialog {
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+}
