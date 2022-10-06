@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="list" *ngIf="contacts?.length">
-    <div class="contact" *ngFor="let contact of contacts; let i = index">
+    <div class="contact" *ngFor="let contact of contacts; let i = index" (click)="details(contact, avatarColors[i])">
       <div class="group">
         <div class="avatar" [ngStyle]="{'background-color': avatarColors[i]}">
           {{contact.name[0]}}
@@ -19,9 +19,9 @@
           <div class="phone">{{contact.number}}</div>
         </div>
       </div>
-      <div class="options">
+      <a class="options" href="tel:{{contact.number}}" (click)="$event.stopPropagation()">
         <mat-icon aria-hidden="false" fontIcon="call"></mat-icon>
-      </div>
+      </a>
     </div>
   </div>
   <div *ngIf="!contacts?.length" class="noContact">

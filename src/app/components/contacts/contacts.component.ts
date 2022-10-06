@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { contactInterface, ContactsService } from 'src/app/services/contacts.service';
+import { ContactDetailsComponent } from '../contact-details/contact-details.component';
 import { ContactFormComponent } from '../contact-form/contact-form.component';
 
 @Component({
@@ -13,14 +14,6 @@ export class ContactsComponent implements OnInit {
   public colors = ['#df2222', '#e77517', '#aa8700', '#4ae222', '#36ddf0', '#ff76d2', '#4a3f9a', '#d691e8'];
   public lastColor: any = this.getRandomColor();
   public avatarColors: string[] = [];
-  public dialogOptions = {
-    DialogPosition: 'bottom',
-    maxWidth: '100vw',
-    maxHeight: '100vh',
-    height: '85%',
-    width: '100%',
-    panelClass: ['animate__animated', 'animate__slideInUp', 'animate__faster', 'fullScreenDialog']
-  };
 
   constructor(
     public dialog: MatDialog,
@@ -39,7 +32,6 @@ export class ContactsComponent implements OnInit {
     }
     this.lastColor = this.colors[random]
     return this.colors[random];
-    //return { 'background-color': this.colors[random] };
   }
 
   setAvatarColors() {
@@ -49,11 +41,33 @@ export class ContactsComponent implements OnInit {
     });
   }
 
+  dialogOptions(data: any) {
+    return {
+      data: data,
+      DialogPosition: 'bottom',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '85%',
+      width: '100%',
+      panelClass: ['animate__animated', 'animate__slideInUp', 'animate__faster', 'fullScreenDialog']
+    };
+  }
+
   add() {
-    const dialogRef = this.dialog.open(ContactFormComponent, this.dialogOptions);
+    const dialogRef = this.dialog.open(ContactFormComponent, this.dialogOptions([]));
     dialogRef.afterClosed().subscribe((contact: contactInterface) => {
       this.contacts = this.contactsService.getContacts();
-      this.avatarColors.push(this.getRandomColor());
+      this.setAvatarColors();
     });
+  }
+
+  details(contact: contactInterface, color: string) {
+    let options = this.dialogOptions(contact);
+    options.data.color = color;
+    const dialogRef = this.dialog.open(ContactDetailsComponent, options);
+    /* dialogRef.afterClosed().subscribe((contact: contactInterface) => {
+      this.contacts = this.contactsService.getContacts();
+      this.avatarColors.push(this.getRandomColor());
+    }); */
   }
 }

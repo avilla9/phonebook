@@ -1,1 +1,33 @@
-<p>contact-details works!</p>
+<div class="head">
+  <div class="options" *ngIf="!editMode">
+    <div class="back">
+      <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_left" (click)="dialogRef.close()"></mat-icon>
+    </div>
+    <div class="group">
+      <div class="edit">
+        <mat-icon aria-hidden="false" fontIcon="edit" (click)="edit()"></mat-icon>
+      </div>
+      <div class="delete">
+        <mat-icon aria-hidden="false" fontIcon="delete" (click)="delete()"></mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="avatar" [ngStyle]="{'background-color': data.color}">{{data.name[0]}}</div>
+  <div class="name">{{data.name}}</div>
+</div>
+<div class="rrss">
+  <a class="call" href="tel:{{data.number}}">
+    <mat-icon aria-hidden="false" fontIcon="call"></mat-icon>
+  </a>
+  <a class="email" href="mailto:{{data.email}}" *ngIf="data.email">
+    <mat-icon aria-hidden="false" fontIcon="mail"></mat-icon>
+  </a>
+</div>
+<div class="details">
+  <div class="phone" *ngIf="!editMode">Phone number: {{data.number}}</div>
+  <div class="mail" *ngIf="data.email && !editMode">Email: {{data.email}}</div>
+</div>
+<div class="actionButtons" *ngIf="editMode">
+  <button type="submit" class="submit" [disabled]="!editContact.userForm.valid" (click)="update()">Update</button>
+  <button class="close" (click)="cancelUpdate()">Cancel</button>
+</div>
