@@ -30,7 +30,6 @@ export class ContactDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
   }
 
   edit() {
@@ -51,7 +50,7 @@ export class ContactDetailsComponent implements OnInit {
     this.data.number = contact.number;
     this.data.email = contact.email;
     this.contactsService.updateContact(this.data.index, contact);
-    this. editMode = false;
+    this.editMode = false;
   }
 
 }
