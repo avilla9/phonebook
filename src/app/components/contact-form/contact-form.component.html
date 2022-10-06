@@ -1,39 +1,51 @@
-<h3>Add Contact</h3>
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <!-- User Name -->
-  <div class="form-group">
-    <label for="firstName">First name</label>
-    <input type="text" class="form-control" id="firstName" formControlName="firstName"
-      [ngClass]="{'is-invalid': formErrors.firstName}" > <!-- (blur)="logValidationErrors()" -->
-    <div class="invalid-feedback" *ngIf="formErrors.firstName">
-      <span>{{formErrors.firstName}}</span>
-    </div>
+<div class="title">Add Contact</div>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="phonebookForm">
+  <div class="inputError" *ngIf="userForm.get('name')?.touched && !userForm.get('name')?.valid">
+    You must enter a name of at least 3 characters
   </div>
   <div class="form-group">
-    <label for="lastName">Last name</label>
-    <input type="text" class="form-control" id="lastName" formControlName="lastName">
+    <label for="name">
+      <mat-icon aria-hidden="false" fontIcon="person"></mat-icon>
+    </label>
+    <input placeholder="Name" type="text" class="form-control" id="name" formControlName="name"
+      [ngClass]="{'is-invalid': formErrors.name}">
   </div>
 
-  <!-- Mobile -->
+  <div class="inputError" *ngIf="userForm.get('number')?.touched && !userForm.get('number')?.valid && !userForm.get('number')?.hasError('pattern')">
+    You must enter a number of at least 10 characters
+  </div>
+  <div class="inputError" *ngIf="userForm.get('number')?.touched && userForm.get('number')?.hasError('pattern')">
+    Invalid mobile number
+  </div>
   <div class="form-group">
-    <label for="mobile">Mobile</label>
-    <div class="input-group mb-2">
-      <input type="text" class="form-control" id="mobile" maxlength="10" formControlName="mobile"
-        [ngClass]="{'is-invalid': formErrors.mobile}"> <!-- (blur)="logValidationErrors()" -->
-      <div class="invalid-feedback" *ngIf="formErrors.mobile">
-        <span>{{formErrors.mobile}}</span>
-      </div>
+    <label for="number">
+      <mat-icon aria-hidden="false" fontIcon="call"></mat-icon>
+    </label>
+    <input placeholder="Number" type="text" class="form-control" id="number" maxlength="20" formControlName="number"
+      [ngClass]="{'is-invalid': formErrors.number}">
+
+    <div class="invalid-feedback" *ngIf="formErrors.number">
+      <span>{{formErrors.number}}</span>
     </div>
   </div>
-  <!-- whatsapp -->
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="whatsapp" formControlName="whatsapp">
-    <label class="form-check-label" for="whatsapp">are you using WhatsApp</label>
+
+  <div class="inputError" *ngIf="userForm.get('email')?.touched && !userForm.get('email')?.valid">
+    Enter a valid email address
   </div>
-  <div>
-    <button type="submit" class="btn btn-primary mr-1" [disabled]="userForm.invalid"
-      (click)="dialogRef.close()">Submit</button>
-    <button type="button" class="btn btn-success ml-1">Load Data</button>
-    <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+  <div class="form-group">
+    <label for="email">
+      <mat-icon aria-hidden="false" fontIcon="email"></mat-icon>
+    </label>
+    <input placeholder="Email" type="email" class="form-control" id="email" formControlName="email"
+      [ngClass]="{'is-invalid': formErrors.email}">
+    <div class="invalid-feedback" *ngIf="formErrors.email">
+      <span>{{formErrors.email}}</span>
+    </div>
+  </div>
+
+  <div class="actionButtons">
+    <button type="submit" class="submit" [disabled]="!userForm.valid" (click)="dialogRef.close()">Submit</button>
+    <button class="close" (click)="dialogRef.close()">Cancel</button>
   </div>
 </form>

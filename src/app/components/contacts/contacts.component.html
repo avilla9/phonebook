@@ -2,20 +2,20 @@
   <div class="header">
     <div class="text">
       <div class="title">Phonebook</div>
-      <div class="counter">Contacts ({{contacts.length}})</div>
+      <div class="counter">Contacts ({{contacts ? contacts.length : 0}})</div>
     </div>
     <div class="newContact">
       <mat-icon aria-hidden="false" fontIcon="add" (click)="add()"></mat-icon>
     </div>
   </div>
-  <div class="list">
+  <div class="list" *ngIf="contacts?.length">
     <div class="contact" *ngFor="let contact of contacts; let i = index">
       <div class="group">
         <div class="avatar" [ngStyle]="getRandomColor()">
-          {{contact.firstName[0]}}
+          {{contact.name[0]}}
         </div>
         <div class="info">
-          <div class="name">{{contact.firstName+' '+contact.lastName}}</div>
+          <div class="name">{{contact.name}}</div>
           <div class="phone">{{contact.number}}</div>
         </div>
       </div>
@@ -23,5 +23,8 @@
         <mat-icon aria-hidden="false" fontIcon="call"></mat-icon>
       </div>
     </div>
+  </div>
+  <div *ngIf="!contacts?.length" class="noContact">
+    There are no contacts to show
   </div>
 </div>

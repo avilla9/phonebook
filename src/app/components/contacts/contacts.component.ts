@@ -42,9 +42,7 @@ export class ContactsComponent implements OnInit {
   add() {
     const dialogRef = this.dialog.open(ContactFormComponent, this.dialogOptions);
     dialogRef.afterClosed().subscribe((contact: contactInterface) => {
-      if (contact) {
-        this.contacts.push(contact);
-      }
+      this.contacts = this.contactsService.getContacts();
     });
   }
 }
