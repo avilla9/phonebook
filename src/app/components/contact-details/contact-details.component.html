@@ -1,5 +1,5 @@
 <div class="head">
-  <div class="options" *ngIf="!editMode">
+  <div class="options">
     <div class="back">
       <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_left" (click)="dialogRef.close()"></mat-icon>
     </div>
@@ -23,11 +23,59 @@
     <mat-icon aria-hidden="false" fontIcon="mail"></mat-icon>
   </a>
 </div>
-<div class="details">
-  <div class="phone" *ngIf="!editMode">Phone number: {{data.number}}</div>
-  <div class="mail" *ngIf="data.email && !editMode">Email: {{data.email}}</div>
+<div class="details" *ngIf="!editMode">
+  <div class="phone">Number: {{data.number}}</div>
+  <div class="mail" *ngIf="data.email">Email: {{data.email}}</div>
 </div>
-<div class="actionButtons" *ngIf="editMode">
-  <button type="submit" class="submit" [disabled]="!editContact.userForm.valid" (click)="update()">Update</button>
-  <button class="close" (click)="cancelUpdate()">Cancel</button>
+<div class="details" *ngIf="editMode">
+  <form [formGroup]="userForm" (ngSubmit)="update()" class="phonebookForm">
+    <div class="inputError" *ngIf="userForm.get('name')?.touched && !userForm.get('name')?.valid">
+      You must enter a name of at least 3 characters
+    </div>
+    <div class="form-group">
+      <label for="name">
+        <mat-icon aria-hidden="false" fontIcon="person"></mat-icon>
+      </label>
+      <input placeholder="Name" type="text" class="form-control" id="name" formControlName="name"
+        [ngClass]="{'is-invalid': formErrors.name}" [ngModel]="data.name">
+    </div>
+
+    <div class="inputError"
+      *ngIf="userForm.get('number')?.touched && !userForm.get('number')?.valid && !userForm.get('number')?.hasError('pattern')">
+      You must enter a number of at least 10 characters
+    </div>
+    <div class="inputError" *ngIf="userForm.get('number')?.touched && userForm.get('number')?.hasError('pattern')">
+      Invalid mobile number
+    </div>
+    <div class="form-group">
+      <label for="number">
+        <mat-icon aria-hidden="false" fontIcon="call"></mat-icon>
+      </label>
+      <input placeholder="Number" type="text" class="form-control" id="number" maxlength="20" formControlName="number"
+        [ngClass]="{'is-invalid': formErrors.number}" [ngModel]="data.number">
+
+      <div class="invalid-feedback" *ngIf="formErrors.number">
+        <span>{{formErrors.number}}</span>
+      </div>
+    </div>
+
+    <div class="inputError" *ngIf="userForm.get('email')?.touched && !userForm.get('email')?.valid">
+      Enter a valid email address
+    </div>
+    <div class="form-group">
+      <label for="email">
+        <mat-icon aria-hidden="false" fontIcon="email"></mat-icon>
+      </label>
+      <input placeholder="Email" type="email" class="form-control" id="email" formControlName="email"
+        [ngClass]="{'is-invalid': formErrors.email}" [ngModel]="data.email">
+      <div class="invalid-feedback" *ngIf="formErrors.email">
+        <span>{{formErrors.email}}</span>
+      </div>
+    </div>
+
+    <div class="actionButtons" *ngIf="editMode">
+      <button type="submit" class="submit" [disabled]="!userForm.valid" (click)="update()">Update</button>
+      <button class="close" (click)="edit()">Cancel</button>
+    </div>
+  </form>
 </div>

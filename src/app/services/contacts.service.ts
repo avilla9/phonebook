@@ -36,4 +36,10 @@ export class ContactsService {
     contacts.splice(index, 1);
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }
+
+  updateContact(index: number, data: contactInterface) {
+    let contacts = this.getContacts();
+    contacts[index] = data;
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }
 }
