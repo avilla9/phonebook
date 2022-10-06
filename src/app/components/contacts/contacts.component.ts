@@ -53,21 +53,25 @@ export class ContactsComponent implements OnInit {
     };
   }
 
+  update() {
+    this.contacts = this.contactsService.getContacts();
+    this.setAvatarColors();
+  }
+
   add() {
     const dialogRef = this.dialog.open(ContactFormComponent, this.dialogOptions([]));
-    dialogRef.afterClosed().subscribe((contact: contactInterface) => {
-      this.contacts = this.contactsService.getContacts();
-      this.setAvatarColors();
+    dialogRef.afterClosed().subscribe(() => {
+      this.update();
     });
   }
 
-  details(contact: contactInterface, color: string) {
+  details(contact: contactInterface, color: string, index: number) {
     let options = this.dialogOptions(contact);
     options.data.color = color;
+    options.data.index = index;
     const dialogRef = this.dialog.open(ContactDetailsComponent, options);
-    /* dialogRef.afterClosed().subscribe((contact: contactInterface) => {
-      this.contacts = this.contactsService.getContacts();
-      this.avatarColors.push(this.getRandomColor());
-    }); */
+    dialogRef.afterClosed().subscribe(() => {
+      this.update();
+    });
   }
 }

@@ -25,9 +25,15 @@ export class ContactsService {
     return contact;
   }
 
-  addContactInfo(data: any) {
+  addContactInfo(data: contactInterface) {
     let contactData = this.getContacts();
     contactData.push(data);
     localStorage.setItem('contacts', JSON.stringify(contactData));
+  }
+
+  deleteContact(index: number) {
+    let contacts = this.getContacts();
+    contacts.splice(index, 1);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
   }
 }

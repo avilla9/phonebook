@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="list" *ngIf="contacts?.length">
-    <div class="contact" *ngFor="let contact of contacts; let i = index" (click)="details(contact, avatarColors[i])">
+    <div class="contact" *ngFor="let contact of contacts; let i = index" (click)="details(contact, avatarColors[i], i)">
       <div class="group">
         <div class="avatar" [ngStyle]="{'background-color': avatarColors[i]}">
           {{contact.name[0]}}
