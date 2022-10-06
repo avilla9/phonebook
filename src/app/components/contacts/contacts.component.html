@@ -11,7 +11,7 @@
   <div class="list" *ngIf="contacts?.length">
     <div class="contact" *ngFor="let contact of contacts; let i = index">
       <div class="group">
-        <div class="avatar" [ngStyle]="getRandomColor()">
+        <div class="avatar" [ngStyle]="{'background-color': avatarColors[i]}">
           {{contact.name[0]}}
         </div>
         <div class="info">
